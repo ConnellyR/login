@@ -37,6 +37,10 @@ def inject_logged_in():
 @app.route('/')
 def home():
     return render_template('home.html')
+   
+   
+  
+    
 
 @app.route('/posted', methods=['POST'])
 def post():
@@ -46,7 +50,9 @@ def post():
 
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
-def login():   
+def login():  
+
+
     return github.authorize(callback=url_for('authorized', _external=True, _scheme='http')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')
