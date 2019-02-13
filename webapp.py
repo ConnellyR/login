@@ -26,10 +26,9 @@ github = oauth.remote_app(
     authorize_url='https://github.com/login/oauth/authorize' #URL for github's OAuth login
 )
 
-#TODO: Create and set a global variable for the name of you JSON file here.  The file will be storedd on Heroku, so you don't need to make it in GitHub
+#TODO: globalVar=postData Create and set a global variable for the name of you JSON file here.  The file will be storedd on Heroku, so you don't need to make it in GitHub
 
 #TODO: Create the file on Heroku using os.system.  Ex) os.system("echo '[]'>"+myFile) puts '[]' into your file
-
 @app.context_processor
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
@@ -37,13 +36,14 @@ def inject_logged_in():
 @app.route('/')
 def home():
     return render_template('home.html')
-   
-   
-  
-    
 
 @app.route('/posted', methods=['POST'])
 def post():
+    v = request.forum
+    alldata += v
+    os.run( json(alldata) > file )
+    
+    #open(file).json["post 1"]
     return render_template('home.html')
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
     #Every post should include the username of the poster and text of the post. 
@@ -51,8 +51,6 @@ def post():
 #redirect to GitHub's OAuth page and confirm callback URL
 @app.route('/login')
 def login():  
-
-
     return github.authorize(callback=url_for('authorized', _external=True, _scheme='http')) #callback URL must match the pre-configured callback URL
 
 @app.route('/logout')
@@ -84,4 +82,5 @@ def get_github_oauth_token():
 
 
 if __name__ == '__main__':
+    os.system("echo json(array) > file")
     app.run()
