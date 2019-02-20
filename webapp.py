@@ -27,36 +27,40 @@ github = oauth.remote_app(
 )
 
 #TODO: globalVar=postData Create and set a global variable for the name of you JSON file here.  The file will be storedd on Heroku, so you don't need to make it in GitHub
-pdata="post.JSON"
+pdata="static/posts.json"
 #TODO: Create the file on Heroku using os.system.  Ex) os.system("echo '[]'>"+myFile) puts '[]' into your file
-os.system("echo '[]'>"+pdata)
+#os.system("echo '[]'>"+pdata)
 @app.context_processor
 def inject_logged_in():
     return {"logged_in":('github_token' in session)}
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    with open(pdata,"r") as postfile:
+        data=json.load(postfile)
+        return render_template('home.html', past_posts=data)
 
 @app.route('/posted', methods=['POST'])
 def post():
-    #v = request.forum
-    #alldata += v
+    
+    newpost=request.form['message']
+    myDict = {'message':newpost}
+    #alldata += newpost
     #os.run( json(alldata) > file )
-    
-    
-    
-    newpost= request.form['message']
     with open(pdata,'r') as oldpost:
         data=json.load(oldpost)
-        oldpost.seek(0)
-        oldpost.truncate()
-        data.append(newpost)
-        JSON.dump(data,oldpost)
-        
-    return render_template('home.html', )
+       # oldpost.seek(0)
+        #oldpost.truncate()
+        #data.append(newpost)
+       
+    data.append(myDict)
+    with open(pdata,'w') as oldpost:
+        json.dump(data,oldpost)
+     
+    #return render_template('home.html' )
+    return redirect(url_for('.home'))
     #This function should add the new post to the JSON file of posts and then render home.html and display the posts.  
-    #Every post should include the username of the poster and text of the post.  posts_to_html
+    #Every post should include the username of the poster and text of the post.  poststohtml data 
     #('filename.JSON','r+')
     # data=json.load(f)
         #JSON.dump(data,f)
