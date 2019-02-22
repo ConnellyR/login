@@ -38,22 +38,36 @@ def inject_logged_in():
 def home():
     with open(pdata,"r") as postfile:
         data=json.load(postfile)
+        
+            for 
+        
         return render_template('home.html', past_posts=data)
 
 @app.route('/posted', methods=['POST'])
 def post():
     
     newpost=request.form['message']
-    myDict = {'message':newpost}
+    usr= session['user_data']['login'];
+    
+    my2Dict = {}
+    my2Dict["user"] = usr
+    my2Dict["message"] = newpost
+    
+   # myDict = {'message':newpost}
+   
+    
     #alldata += newpost
     #os.run( json(alldata) > file )
+    
+    
     with open(pdata,'r') as oldpost:
         data=json.load(oldpost)
-       # oldpost.seek(0)
+        data.append(my2Dict)
+         # oldpost.seek(0)
         #oldpost.truncate()
         #data.append(newpost)
        
-    data.append(myDict)
+    
     with open(pdata,'w') as oldpost:
         json.dump(data,oldpost)
      
