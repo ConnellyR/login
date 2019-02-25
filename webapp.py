@@ -38,10 +38,11 @@ def inject_logged_in():
 def home():
     with open(pdata,"r") as postfile:
         data=json.load(postfile)
-        
-            for 
-        
-        return render_template('home.html', past_posts=data)
+    nice= ""
+    for x in data:
+        nice += Markup( "<div>" + "<p>" + str(x[ "user"]) + "--" + str(x[ "message"]) + "</p>" +" </div>" )
+               
+    return render_template('home.html', past_posts=Markup(nice))
 
 @app.route('/posted', methods=['POST'])
 def post():
@@ -97,6 +98,7 @@ def authorized():
         message = 'Access denied: reason=' + request.args['error'] + ' error=' + request.args['error_description'] + ' full=' + pprint.pformat(request.args)      
     else:
         try:
+            print(resp)
             session['github_token'] = (resp['access_token'], '') #save the token to prove that the user logged in
             session['user_data']=github.get('user').data
             message='You were successfully logged in as ' + session['user_data']['login']

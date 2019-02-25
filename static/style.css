@@ -3,5 +3,8 @@ body {
 }
 
 #content {
-     margin-left: 20px;
+    margin-left: 20px;
+}
+ p {
+   margin: auto;
 }
