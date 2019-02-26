@@ -40,7 +40,7 @@ def home():
         data=json.load(postfile)
     nice= ""
     for x in data:
-        nice += Markup( "<div>" + "<p>" + str(x[ "user"]) + "--" + str(x[ "message"]) + "</p>" +" </div>" )
+        nice += Markup( '<div class="key" >' + "<p>" + str(x[ "user"]) + "--" + str(x[ "message"]) + "</p>" +" </div>" )
                
     return render_template('home.html', past_posts=Markup(nice))
 
@@ -48,6 +48,7 @@ def home():
 def post():
     
     newpost=request.form['message']
+    str.replace("\r\n", "<br>")
     usr= session['user_data']['login'];
     
     my2Dict = {}
