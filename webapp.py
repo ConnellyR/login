@@ -38,18 +38,16 @@ def inject_logged_in():
 def home():
     with open(pdata,"r") as postfile:
         data=json.load(postfile)
-    nice= ""
-    for x in data:
-        nice += Markup( '<div class="key" >' + "<p>" + str(x[ "user"]) + "--" + str(x[ "message"]) + "</p>" +" </div>" )
-               
-    return render_template('home.html', past_posts=Markup(nice))
+   
+    return render_template('home.html', past_posts=data)
 
 @app.route('/posted', methods=['POST'])
 def post():
-    
     newpost=request.form['message']
-    str.replace("\r\n", "<br>")
-    usr= session['user_data']['login'];
+    newpost= newpost.replace('\r', '')
+    newpost= newpost.replace('\n', '<br>')
+    print( newpost)
+    usr=session['user_data']['login'];
     
     my2Dict = {}
     my2Dict["user"] = usr

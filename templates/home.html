@@ -11,7 +11,9 @@
     <br>
     <input type="submit" value="Post">
     </form>
-    {{ past_posts }}
+   {% for post in past_posts%}
+   <div class="key" >  <p> {{post["user"]|safe}}  -- {{post["message"]|safe}}</p> <button type="button" class="btn btn-danger">Delete</button> <button type="button" class="btn btn-info">Comment</button> <button type="button" class="btn btn-success">Edit</button> </div>
+   {% endfor%}
 {%else%}
     <p>
     You must be logged in to post on the forum.Forum description: this is a posting website that allows users to post information, question, answer, and more!
