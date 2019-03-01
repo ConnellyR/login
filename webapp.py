@@ -49,10 +49,21 @@ def post():
     print( newpost)
     usr=session['user_data']['login'];
     
+  
+    
+    with open(pdata,'r') as oldpost:
+        data=json.load(oldpost)
+    
+       
+        
     my2Dict = {}
     my2Dict["user"] = usr
     my2Dict["message"] = newpost
-    
+    my2Dict["id"]= len(data)
+ 
+       
+
+    data.append(my2Dict)       
    # myDict = {'message':newpost}
    
     
@@ -60,12 +71,7 @@ def post():
     #os.run( json(alldata) > file )
     
     
-    with open(pdata,'r') as oldpost:
-        data=json.load(oldpost)
-        data.append(my2Dict)
-         # oldpost.seek(0)
-        #oldpost.truncate()
-        #data.append(newpost)
+  
        
     
     with open(pdata,'w') as oldpost:
@@ -112,6 +118,44 @@ def authorized():
 def get_github_oauth_token():
     return session.get('github_token')
 
+    
+    
+@app.route('/delete', methods=['GET'])
+def delete():
+
+    
+    get id , open delete 
+    
+    usr=session['user_data']['login'];
+    
+    my2Dict = {}
+    my2Dict["user"] = usr
+    my2Dict["message"] = newpost
+    
+
+    
+    
+    with open(pdata,'r') as oldpost:
+        data=json.load(oldpost)
+        data.append(my2Dict)
+       
+       
+    
+    with open(pdata,'w') as oldpost:
+        json.dump(data,oldpost)
+     
+    
+    return redirect(url_for('.home'))   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 if __name__ == '__main__':
     os.system("echo json(array) > file")
