@@ -120,26 +120,26 @@ def get_github_oauth_token():
 
     
     
-@app.route('/delete', methods=['GET'])
+@app.route('/delete', methods=['GET','POST'])
 def delete():
 
     
-    get id , open delete 
+    #get id , open delete 
     
     usr=session['user_data']['login'];
-    
-    my2Dict = {}
-    my2Dict["user"] = usr
-    my2Dict["message"] = newpost
+    print(request.form)
     
 
     
     
     with open(pdata,'r') as oldpost:
         data=json.load(oldpost)
-        data.append(my2Dict)
+        
        
-       
+    for post in data:
+        if post["id"]==int(request.form["id"]):
+            posttod=post
+    data.remove(posttod)        
     
     with open(pdata,'w') as oldpost:
         json.dump(data,oldpost)

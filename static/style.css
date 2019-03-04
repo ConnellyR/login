@@ -1,9 +1,10 @@
 body {
-
+background-color:#b2cfee;
 }
 
 #content {
     margin-left: 20px;
+    margin-right: 20px;
 }
  p {
    text-align: center;

@@ -12,7 +12,16 @@
     <input type="submit" value="Post">
     </form>
    {% for post in past_posts%}
-   <div class="key" >  <p> {{post["id"]|safe}}  --  {{post["user"]|safe}}  -- {{post["message"]|safe}}</p> <a href='/delete' type="button" name = '{{post["id"]}}' class="btn btn-danger">Delete</a> <button type="button" class="btn btn-info">Comment</button> <button type="button" class="btn btn-success">Edit</button> </div>
+   <div class="key" > 
+   <p> {{post["id"]|safe}}  --  {{post["user"]|safe}}  -- {{post["message"]|safe}}</p>
+  
+   <form action='/delete' method="post">
+   <input type="hidden" name="id" value='{{post["id"]}}'>
+   <button type="submit" class="btn btn-danger">Delete</button>
+   </form>
+   
+  <!-- <button type="button" class="btn btn-info">Comment</button>
+   <button type="button" class="btn btn-success">Edit</button> --></div> 
    {% endfor%}
 {%else%}
     <p>
